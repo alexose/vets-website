@@ -10,6 +10,10 @@
 
 set -e
 
+# Set source timestamps equal to their git modified dates
+# This is necessary for hard-source-plugin to work.
+bash script/set-timestamps.sh
+
 # Run package security checks
 npm install -g nsp
 nsp check
