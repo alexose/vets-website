@@ -2,6 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { states } from './options-for-select';
 import { dateToMoment, showRelinquishedEffectiveDate } from './helpers';
+import { isValidDateOver17 } from '../../common/utils/validations';
 
 function validateIfDirty(field, validator) {
   if (field.dirty) {
@@ -50,6 +51,10 @@ function isBlankAddress(address) {
 
 function isValidYear(value) {
   return Number(value) >= 1900;
+}
+
+function isValidYearOrBlank(value) {
+  return Number(value) >= 1900 || value === '';
 }
 
 function isValidCurrentOrPastYear(value) {
@@ -230,14 +235,17 @@ function isValidAddressField(field) {
 function isValidPersonalInfoPage(data) {
   return isValidFullNameField(data.veteranFullName) &&
       isValidRequiredField(isValidSSN, data.veteranSocialSecurityNumber) &&
-      isValidDateField(data.veteranDateOfBirth);
+      isValidDateField(data.veteranDateOfBirth) &&
+      isValidDateOver17(data.veteranDateOfBirth.day.value,
+                        data.veteranDateOfBirth.month.value,
+                        data.veteranDateOfBirth.year.value);
 }
 
 function isValidBenefitsInformationPage(data) {
   return data.chapter33 || data.chapter30 || data.chapter32 || data.chapter1606;
 }
 
-function isValidBenefitsWaiverPage(data) {
+function isValidBenefitsRelinquishmentPage(data) {
   return !data.chapter33 ||
     (isNotBlank(data.benefitsRelinquished.value) &&
       (!showRelinquishedEffectiveDate(data.benefitsRelinquished.value) ||
@@ -323,13 +331,12 @@ function isValidRotcScholarshipAmount(data) {
 }
 
 function isValidRotcHistoryPage(data) {
-  return data.seniorRotcCommissioned.value !== 'Y' || (isNotBlank(data.seniorRotc.commissionYear.value)
-    && data.seniorRotc.rotcScholarshipAmounts.every(isValidRotcScholarshipAmount));
+  return data.seniorRotcCommissioned.value !== 'Y' || data.seniorRotc.rotcScholarshipAmounts.every(isValidRotcScholarshipAmount);
 }
 
 function isValidForm(data) {
   return isValidBenefitsInformationPage(data)
-    && isValidBenefitsWaiverPage(data)
+    && isValidBenefitsRelinquishmentPage(data)
     && isValidPersonalInfoPage(data)
     && isValidContactInformationPage(data)
     && isValidMilitaryServicePage(data)
@@ -350,8 +357,8 @@ function isValidPage(completePath, pageData) {
       return isValidContactInformationPage(pageData);
     case '/benefits-eligibility/benefits-selection':
       return isValidBenefitsInformationPage(pageData);
-    case '/benefits-eligibility/benefits-waiver':
-      return isValidBenefitsWaiverPage(pageData);
+    case '/benefits-eligibility/benefits-relinquishment':
+      return isValidBenefitsRelinquishmentPage(pageData);
     case '/military-history/military-service':
       return isValidMilitaryServicePage(pageData);
     case '/military-history/benefits-history':
@@ -400,6 +407,7 @@ export {
   isValidPhone,
   isValidEmail,
   isValidYear,
+  isValidYearOrBlank,
   isValidCurrentOrPastYear,
   isValidMonths,
   isValidRoutingNumber,

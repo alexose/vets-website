@@ -5,7 +5,7 @@ import ExpandingGroup from '../../../common/components/form-elements/ExpandingGr
 import GrowableTable from '../../../common/components/form-elements/GrowableTable';
 import RotcScholarship from './RotcScholarship';
 import { createRotcScholarship } from '../../utils/veteran';
-import { isValidPage, validateIfDirty, isValidYear, isValidRotcScholarshipAmount } from '../../utils/validations';
+import { isValidPage, validateIfDirty, isValidYearOrBlank, isValidRotcScholarshipAmount } from '../../utils/validations';
 import { yesNo } from '../../utils/options-for-select';
 
 export default class RotcHistoryFields extends React.Component {
@@ -17,7 +17,7 @@ export default class RotcHistoryFields extends React.Component {
     const propertyPath = 'seniorRotc.rotcScholarshipAmounts';
     return (<fieldset>
       <legend>ROTC history</legend>
-      <p>(<span className="form-required-span">*</span>) Indicates a required field</p>
+      <p><span className="form-required-span">*</span>Indicates a required field</p>
       <ExpandingGroup open={this.props.data.seniorRotcCommissioned.value === 'Y'} additionalClass="edu-benefits-rotc-group">
         <ErrorableRadioButtons
             label="Were you commissioned as a result of senior ROTC?"
@@ -27,11 +27,10 @@ export default class RotcHistoryFields extends React.Component {
             onValueChange={(update) => {this.props.onStateChange('seniorRotcCommissioned', update);}}/>
         <div>
           <div className="input-section">
-            <ErrorableNumberInput required
+            <ErrorableNumberInput
                 additionalClass="usa-input-medium"
-                errorMessage={validateIfDirty(this.props.data.seniorRotc.commissionYear, isValidYear) ? undefined : 'Please enter a valid year'}
+                errorMessage={validateIfDirty(this.props.data.seniorRotc.commissionYear, isValidYearOrBlank) ? undefined : 'Please enter a valid year'}
                 label="Year of commission"
-                placeholder="yyyy"
                 min="1900"
                 name="commissionYear"
                 field={this.props.data.seniorRotc.commissionYear}

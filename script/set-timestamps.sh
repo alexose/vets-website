@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/bin/sh -e
 # via http://stackoverflow.com/questions/1964470
 
@@ -33,23 +32,3 @@ git ls-files | while read -r file
 do
     update_file_timestamp "$file"
 done
-=======
-#!/bin/sh
-# via http://stackoverflow.com/questions/1964470
-
-if [ "$(uname)" = 'Darwin' ] ||
-   [ "$(uname)" = 'FreeBSD' ]; then
-   gittouch() {
-      touch -ch -t "$(date -r "$(git log -1 --format=%ct "$1")" '+%Y%m%d%H%M.%S')" "$1"
-   }
-else
-   gittouch() {
-      touch -ch -d "$(git log -1 --format=%ci "$1")" "$1"
-   }
-fi
-
-git ls-files |
-   while IFS= read -r file; do
-      gittouch "$file"
-   done
->>>>>>> 55a9d16662f63fa592edd7a60cdd7c3707e70929

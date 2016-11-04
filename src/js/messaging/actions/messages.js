@@ -63,7 +63,7 @@ export function fetchThread(id) {
     )).then(
       data => dispatch({
         type: FETCH_THREAD_SUCCESS,
-        message: data[0].data,
+        message: data[0],
         thread: data[1].data
       }),
       err => dispatch({ type: FETCH_THREAD_FAILURE, err })
@@ -253,8 +253,8 @@ export function toggleReplyDetails() {
   return { type: TOGGLE_REPLY_DETAILS };
 }
 
-export function updateDraft(field) {
-  return { type: UPDATE_DRAFT, field };
+export function updateDraft(key, field) {
+  return { type: UPDATE_DRAFT, key, field };
 }
 
 export function toggleMoveTo() {

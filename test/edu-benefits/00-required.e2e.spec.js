@@ -1,4 +1,4 @@
-if (process.env.BUILDTYPE !== 'production') {
+if (process.env.BUILDTYPE === 'development') {
   const E2eHelpers = require('../util/e2e-helpers');
   const Timeouts = require('../util/timeouts.js');
   const EduHelpers = require('../util/edu-helpers');
@@ -82,7 +82,7 @@ if (process.env.BUILDTYPE !== 'production') {
 
       // Submit message
       client
-        .expect.element('.usa-alert-success').to.be.visible;
+        .expect.element('.edu-benefits-submit-success').to.be.visible;
 
       client.end();
     }
