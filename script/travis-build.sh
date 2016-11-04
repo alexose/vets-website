@@ -11,11 +11,10 @@
 set -e
 
 # Run package security checks
+echo 'Running nsp...'
 npm install -g nsp
 nsp check
 
-# Run lint and perform a build
-npm run lint;
 npm run build -- --buildtype $BUILDTYPE;
 
 # Add build details to BUILD.txt
@@ -32,10 +31,10 @@ echo "TRAVIS_BRANCH=$TRAVIS_BRANCH" >> $BUILD_DETAILS_FILE
 npm run test:unit;
 
 # Bootstrap selenium for all nightwatch-based tests
-npm run selenium:bootstrap;
+# npm run selenium:bootstrap;
 
 # Run end to end tests
-npm run test:e2e;
+# npm run test:e2e;
 
 # Run accessibility tests for master, staging, and production
 if [[ $TRAVIS_BRANCH == 'staging' ||
