@@ -18,9 +18,7 @@ notifications:
   email: false
 
 before_install:
-  - if [ -f ${DOCKER_CACHE_FILE} ]; then gunzip -c ${DOCKER_CACHE_FILE} | docker load; fi
-  - npm install -g npm@3.8.9 
-  - npm --version
+  - if [ -f ${DOCKER_CACHE_FILE} ]; then gunzip -c ${DOCKER_CACHE_FILE} | docker load; else npm install -g npm@3.8.9 && npm --version; fi
 
 cache:
   apt: true
