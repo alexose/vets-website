@@ -15,8 +15,6 @@ echo 'Running nsp...'
 npm install -g nsp
 nsp check
 
-# Run lint and perform a build
-npm run lint;
 npm run build -- --buildtype $BUILDTYPE;
 
 # Add build details to BUILD.txt
