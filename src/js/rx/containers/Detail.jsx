@@ -15,6 +15,7 @@ import TableVerticalHeader from '../components/tables/TableVerticalHeader';
 import SubmitRefill from '../components/SubmitRefill';
 import { rxStatuses } from '../config';
 import { formatDate } from '../utils/helpers';
+import { getScrollOptions } from '../../common/utils/helpers';
 
 const ScrollElement = Scroll.Element;
 const scroller = Scroll.scroller;
@@ -154,11 +155,7 @@ export class Detail extends React.Component {
   }
 
   scrollToOrderHistory() {
-    scroller.scrollTo('orderHistory', {
-      duration: 500,
-      delay: 0,
-      smooth: true,
-    });
+    scroller.scrollTo('orderHistory', getScrollOptions());
   }
 
   render() {
@@ -180,9 +177,19 @@ export class Detail extends React.Component {
       content = (
         <div>
           {header}
-          {rxInfo}
-          {contactCard}
-          {orderHistory}
+          <div className="row">
+            <div className="columns medium-8">
+              {rxInfo}
+            </div>
+            <div className="columns medium-4">
+              {contactCard}
+            </div>
+          </div>
+          <div className="row">
+            <div className="columns medium-8">
+              {orderHistory}
+            </div>
+          </div>
         </div>
       );
     } else {
@@ -212,10 +219,11 @@ export class Detail extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const rxState = state.health.rx;
   return {
-    alert: state.alert,
-    loading: state.prescriptions.detail.loading,
-    prescription: state.prescriptions.currentItem
+    alert: rxState.alert,
+    loading: rxState.prescriptions.detail.loading,
+    prescription: rxState.prescriptions.currentItem
   };
 };
 

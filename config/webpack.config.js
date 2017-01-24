@@ -100,6 +100,8 @@ const configGenerator = (options) => {
     plugins: [
       new webpack.DefinePlugin({
         __BUILDTYPE__: JSON.stringify(options.buildtype),
+        __ALL_CLAIMS_ENABLED__: (options.buildtype === 'development' || process.env.ALL_CLAIMS_ENABLED === 'true'),
+        __SAMPLE_ENABLED__: (process.env.SAMPLE_ENABLED === 'true'),
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
           API_PORT: (process.env.API_PORT || 4000),
@@ -136,7 +138,11 @@ const configGenerator = (options) => {
 
     baseConfig.plugins.push(new webpack.optimize.DedupePlugin());
     baseConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
-    baseConfig.plugins.push(new webpack.optimize.UglifyJsPlugin());
+    baseConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      compress: { warnings: false },
+      comments: false
+    }));
   } else {
     baseConfig.devtool = '#eval-source-map';
   }

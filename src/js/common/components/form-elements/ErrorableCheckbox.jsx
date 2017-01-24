@@ -75,6 +75,7 @@ class ErrorableCheckbox extends React.Component {
             onChange={this.handleChange}/>
         <label
             className={this.props.errorMessage ? 'usa-input-error-label' : undefined}
+            name={`${this.props.name}-label`}
             htmlFor={this.inputId}>
               {this.props.label}
               {requiredSpan}
@@ -90,7 +91,10 @@ ErrorableCheckbox.propTypes = {
   checked: React.PropTypes.bool,
   errorMessage: React.PropTypes.string,
   name: React.PropTypes.string,
-  label: React.PropTypes.string.isRequired,
+  label: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object
+  ]).isRequired,
   onValueChange: React.PropTypes.func.isRequired,
   required: React.PropTypes.bool,
 };

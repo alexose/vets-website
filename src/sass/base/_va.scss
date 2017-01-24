@@ -1,12 +1,12 @@
-html, body {
+html {
   font-size: $em-base;
   font-weight: 500;
-  padding: 0;
-  margin: 0;
+  overflow: -moz-scrollbars-vertical;
 }
 
-html {
-    overflow: -moz-scrollbars-vertical;
+html, body {
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -551,8 +551,7 @@ h6 {
   p {
     padding-top: 0;
     margin-top: 0;
-    padding-bottom: 1em; // TODO: Consider deleting.
-
+    
     &:nth-child(1),
     &:first-of-type {
       color: $color-primary-darker;
@@ -996,7 +995,7 @@ ul, ol {
 
   .active {
     background: $color-gold;
-    color: $color-va-black;
+    color: $color-black;
     font: 400 1.35em / 1.15em $font-serif;
     margin: .5em 0;
     padding: .2em;
@@ -1071,7 +1070,7 @@ li {
   top: -3.5em;
   right: -5em;
   z-index: 1000;
-  background: rgba($color-va-secondary-darkest, .9);
+  background: rgba($color-secondary-darkest, .9);
   color: $color-white;
   font-size: .85em;
   position: fixed;
@@ -1366,7 +1365,7 @@ a.twitter {
   margin: 0 0 .75em 0;
   padding: 0;
   font-size: .9em;
-  font-weight: 300;
+  font-weight: 400;
   color: $color-white;
 
   p {
@@ -1504,13 +1503,6 @@ a.twitter {
 // Blog-related CSS
 //===================================
 
-// byline
-p.byline {
-  font-size: .8em;
-  color: $color-white;
-  color: rgba(255,255,255,.9);
-}
-
 // Info cards
 
 .card {
@@ -1555,7 +1547,7 @@ p.byline {
   }
 
   .heading {
-    color: $color-va-primary-alt-darkest;
+    color: $color-primary-alt-darkest;
     font-size: .8em;
     padding: 0;
   }
@@ -1848,18 +1840,19 @@ li.twenty:before {content: '20';}
 // Disclaimer
 .disclaimer {
   padding: 1em 0;
+  background: $color-white;
   border-top: 1px solid #ddd;
   color: $color-va-gray-cool-dark;
-  background: $color-white;
-
-  &.minimal {
-    border-top: none;
-    padding: .25em 0;
-  }
-
   p {
     font-size: 0.8em;
   }
+}
+
+// Formerly .disclaimer.minimal
+.va-note {
+  color: $color-va-gray-cool-dark;
+  font-size: 1.28rem;
+  padding: .25em 0;
 }
 
 // Info block
